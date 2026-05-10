@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Translator</title>
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>
+            <i class="fa-solid fa-language"></i>
+            AI Language Translator
+        </h1>
+
+        <p>
+            Translate text quickly and easily
+        </p>
+
+    </div>
+
+    <!-- TRANSLATOR -->
+
+    <div class="translator-box">
+
+        <!-- INPUT -->
+
+        <div class="box">
+
+            <h3>
+                <i class="fa-regular fa-pen-to-square"></i>
+                Input Text
+            </h3>
+
+            <textarea id="inputText"
+                      placeholder="Type your text here..."></textarea>
+
+        </div>
+
+        <!-- OUTPUT -->
+
+        <div class="box">
+
+            <h3>
+                <i class="fa-solid fa-language"></i>
+                Translated Text
+            </h3>
+
+            <textarea id="outputText"
+                      readonly></textarea>
+
+        </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+        <select id="sourceLang">
+
+            {% for lang, code in languages.items() %}
+
+            <option value="{{ code }}">
+                {{ lang }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <select id="targetLang">
+
+            {% for lang, code in languages.items() %}
+
+            <option value="{{ code }}">
+                {{ lang }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button class="translate-btn"
+                onclick="translateText()">
+
+            Translate
+
+        </button>
+
+    </div>
+
+    <!-- FEATURES -->
+
+    <div class="features">
+
+        <div class="feature">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h4>Fast</h4>
+
+            <p>
+                Instant translations in seconds
+            </p>
+
+        </div>
+
+        <div class="feature">
+
+            <i class="fa-solid fa-globe"></i>
+
+            <h4>Multi Language</h4>
+
+            <p>
+                Supports multiple languages
+            </p>
+
+        </div>
+
+        <div class="feature">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h4>Secure</h4>
+
+            <p>
+                Safe and reliable translations
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        Made with Flask & Deep Translator
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+
+<script>
+
+async function translateText(){
+
+    let text =
+        document.getElementById("inputText").value;
+
+    let source =
+        document.getElementById("sourceLang").value;
+
+    let target =
+        document.getElementById("targetLang").value;
+
+    if(text.trim() === ""){
+
+        alert("Please enter text");
+
+        return;
+    }
+
+    const response = await fetch("/translate",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            text:text,
+            source:source,
+            target:target
+        })
+    });
+
+    const data = await response.json();
+
+    document.getElementById("outputText").value =
+        data.translated_text;
+}
+
+</script>
+
+</body>
+</html>
