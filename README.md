@@ -23,3 +23,40 @@ HTML5
 CSS3
 JavaScript
 Deep Translator Library
+Step 1: Install Python
+
+Download and install Python from:
+
+Python Official Website
+
+While installing, make sure to check:
+
+✅ Add Python to PATH
+
+Step 2: Open Project Folder
+
+Open your project folder in:
+
+Visual Studio Code
+
+or
+Command Prompt
+Step 3: Open Terminal
+
+In VS Code:
+
+Click Terminal
+Click New Terminal
+Step 4: Install Required Libraries
+
+Run:
+
+pip install flask deep-translator
+
+Or if you have requirements.txt:
+pip install -r requirements.txt
+Step 5: Run the Application
+
+Run:
+
+python app.py
